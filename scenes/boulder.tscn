@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://upnirle67wgu"]
+
+[ext_resource type="Texture2D" uid="uid://y8hql3o7hnmh" path="res://assets/images/sprites.png" id="1_3su44"]
+[ext_resource type="PackedScene" uid="uid://dnohq8rg66xce" path="res://scenes/move_component.tscn" id="2_igwd5"]
+[ext_resource type="PackedScene" uid="uid://dhlpbk8mrcric" path="res://scenes/fall_component.tscn" id="3_j84cg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_007mi"]
+size = Vector2(30, 30)
+
+[node name="Boulder" type="Area2D" groups=["boulder"]]
+collision_layer = 8
+collision_mask = 63
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3su44")
+hframes = 10
+vframes = 10
+frame = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_007mi")
+
+[node name="MoveComponent" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_igwd5")]
+node = NodePath("..")
+
+[node name="FallComponent" parent="." node_paths=PackedStringArray("_move_component") instance=ExtResource("3_j84cg")]
+_move_component = NodePath("../MoveComponent")
+
+[connection signal="move_to" from="MoveComponent" to="MoveComponent" method="_on_move_to"]

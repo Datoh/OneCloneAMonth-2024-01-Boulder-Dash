@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhlpbk8mrcric"]
+
+[ext_resource type="Script" path="res://scenes/fall_component.gd" id="1_7ckbp"]
+
+[node name="FallComponent" type="Node2D" groups=["can_fall"]]
+script = ExtResource("1_7ckbp")
+
+[node name="RayCast2DDirtGem" type="RayCast2D" parent="."]
+enabled = false
+target_position = Vector2(0, 32)
+collision_mask = 20
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayCast2DNoPlayer" type="RayCast2D" parent="."]
+enabled = false
+target_position = Vector2(0, 32)
+collision_mask = 30
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayCast2DNoPlayerNoDirt" type="RayCast2D" parent="."]
+enabled = false
+target_position = Vector2(0, 32)
+collision_mask = 58
+collide_with_areas = true
+collide_with_bodies = false

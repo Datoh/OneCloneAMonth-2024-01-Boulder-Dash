@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://ft60qmfbpydq"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_82ok7"]
+[ext_resource type="Texture2D" uid="uid://y8hql3o7hnmh" path="res://assets/images/sprites.png" id="1_rik0e"]
+[ext_resource type="PackedScene" uid="uid://dnohq8rg66xce" path="res://scenes/move_component.tscn" id="2_kbsx2"]
+
+[sub_resource type="Animation" id="Animation_bix5c"]
+resource_name = "idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [21, 21, 22]
+}
+
+[sub_resource type="Animation" id="Animation_n4w63"]
+resource_name = "walk"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [23, 24, 25, 24]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jiqta"]
+_data = {
+"idle": SubResource("Animation_bix5c"),
+"walk": SubResource("Animation_n4w63")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vdhit"]
+size = Vector2(30, 30)
+
+[node name="Player" type="Area2D" groups=["player"]]
+collision_mask = 63
+script = ExtResource("1_82ok7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rik0e")
+hframes = 10
+vframes = 10
+frame = 21
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jiqta")
+}
+autoplay = "idle"
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = false
+target_position = Vector2(0, 32)
+collision_mask = 10
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayCast2DAll" type="RayCast2D" parent="."]
+enabled = false
+target_position = Vector2(0, -32)
+collision_mask = 30
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="MoveComponent" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_kbsx2")]
+node = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vdhit")
+
+[connection signal="move_to" from="MoveComponent" to="." method="_on_move_component_move_to"]
+[connection signal="moved" from="MoveComponent" to="." method="_on_move_component_moved"]

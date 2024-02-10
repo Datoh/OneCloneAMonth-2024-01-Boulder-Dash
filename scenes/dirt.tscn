@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://oyj6s3cfj2dx"]
+
+[ext_resource type="Texture2D" uid="uid://y8hql3o7hnmh" path="res://assets/images/sprites.png" id="1_7alm5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jqfjw"]
+size = Vector2(30, 30)
+
+[node name="Dirt" type="Area2D" groups=["dirt"]]
+collision_layer = 4
+collision_mask = 63
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7alm5")
+hframes = 10
+vframes = 10
+frame = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jqfjw")
