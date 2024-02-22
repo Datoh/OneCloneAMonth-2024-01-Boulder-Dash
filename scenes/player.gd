@@ -1,6 +1,5 @@
 extends Area2D
-
-const TILE_SIZE = 32
+class_name Player
 
 @onready var move_component = $MoveComponent
 @onready var animation_player = $AnimationPlayer
@@ -25,17 +24,17 @@ func _physics_process(_delta: float):
 
   var offset := Vector2.ZERO
   if Input.is_action_pressed("ui_left"):
-    offset.x = -TILE_SIZE
+    offset.x = -Level.TILE_SIZE
   elif Input.is_action_pressed("ui_right"):
-    offset.x = TILE_SIZE
+    offset.x = Level.TILE_SIZE
   elif Input.is_action_pressed("ui_up"):
-    offset.y = -TILE_SIZE
+    offset.y = -Level.TILE_SIZE
   elif Input.is_action_pressed("ui_down"):
-    offset.y = TILE_SIZE
+    offset.y = Level.TILE_SIZE
 
   if _can_move_to(offset):
     move_component.move(offset)
-    ray_cast_2d_all.target_position = Vector2(0.0, -TILE_SIZE)
+    ray_cast_2d_all.target_position = Vector2(0.0, -Level.TILE_SIZE)
     ray_cast_2d_all.force_raycast_update()
     move.emit(self, ray_cast_2d_all.get_collider())
 
@@ -55,6 +54,6 @@ func _on_move_component_move_to(direction: Vector2):
 
 
 func _on_move_component_moved(_node: Node2D):
-  ray_cast_2d_all.target_position = Vector2(0.0, -TILE_SIZE)
+  ray_cast_2d_all.target_position = Vector2(0.0, -Level.TILE_SIZE)
   ray_cast_2d_all.force_raycast_update()
   moved.emit(self, ray_cast_2d_all.get_collider())

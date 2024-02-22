@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://wsdxabiiecw4"]
+
+[ext_resource type="Texture2D" uid="uid://y8hql3o7hnmh" path="res://assets/images/sprites.png" id="1_dqpfj"]
+[ext_resource type="Script" path="res://scenes/explosion_sprite.gd" id="2_ne7ie"]
+
+[sub_resource type="Animation" id="Animation_mlcwt"]
+resource_name = "explode"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ExplosionSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [40, 41, 42]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_787np"]
+_data = {
+"explode": SubResource("Animation_mlcwt")
+}
+
+[node name="ExplosionSprite" type="Sprite2D"]
+rotation = -1.5708
+texture = ExtResource("1_dqpfj")
+hframes = 10
+vframes = 10
+frame = 40
+script = ExtResource("2_ne7ie")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_787np")
+}
+autoplay = "explode"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

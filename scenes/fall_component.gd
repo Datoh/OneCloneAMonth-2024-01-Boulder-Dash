@@ -1,10 +1,9 @@
 extends Node2D
 class_name FallComponent
 
-const TILE_SIZE = 32
-const DIRECTION_DOWN = Vector2.DOWN * TILE_SIZE
-const DIRECTION_LEFT = Vector2.LEFT * TILE_SIZE
-const DIRECTION_RIGHT = Vector2.RIGHT * TILE_SIZE
+const DIRECTION_DOWN = Vector2.DOWN * Level.TILE_SIZE
+const DIRECTION_LEFT = Vector2.LEFT * Level.TILE_SIZE
+const DIRECTION_RIGHT = Vector2.RIGHT * Level.TILE_SIZE
 
 @export var _move_component: MoveComponent = null
 
