@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3erivw1krgte"]
+
+[ext_resource type="Texture2D" uid="uid://y8hql3o7hnmh" path="res://assets/images/sprites.png" id="1_cl60y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_207i2"]
+size = Vector2(2, 2)
+
+[node name="Exit" type="Area2D" groups=["exit"]]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_cl60y")
+hframes = 10
+vframes = 10
+frame = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_207i2")

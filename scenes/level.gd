@@ -34,6 +34,8 @@ func _on_player_area_entered(area: Area2D):
     _explosion(area.position)
   elif area.is_in_group("dirt"):
     area.queue_free()
+  elif area.is_in_group("exit"):
+    get_tree().call_deferred("reload_current_scene")
 
 
 func _explosion(a_position: Vector2):
