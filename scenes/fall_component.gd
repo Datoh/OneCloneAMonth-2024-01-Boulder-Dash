@@ -11,6 +11,14 @@ const DIRECTION_RIGHT = Vector2.RIGHT * Level.TILE_SIZE
 @onready var ray_cast_2d_no_player = $RayCast2DNoPlayer
 @onready var ray_cast_2d_no_player_no_dirt = $RayCast2DNoPlayerNoDirt
 
+static func get_component(entity: Variant) -> FallComponent:
+  if not is_instance_valid(entity) or not entity is Node:
+    return null
+  for child in entity.get_children():
+    if child is FallComponent:
+      return child as FallComponent
+  return null
+
 
 func update():
   if not _move_component or not _move_component.can_move or _move_component.moving():

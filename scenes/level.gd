@@ -46,24 +46,15 @@ func _explosion(a_position: Vector2):
   _explosions.call_deferred("add_child", explosion)
 
 
-func _get_move_component(node: Node2D) -> MoveComponent:
-  if not node:
-    return null
-  for component in node.get_children():
-    if component is MoveComponent:
-      return component as MoveComponent
-  return null
-
-
 func _on_player_move(_node: Node2D, node_up: Node2D):
   _node_up = node_up
 
 
 func _on_player_moved(_node: Node2D, node_up: Node2D):
-  var previous_node_up_move_component := _get_move_component(_node_up) if is_instance_valid(_node_up) else null
+  var previous_node_up_move_component := MoveComponent.get_component(_node_up)
   if previous_node_up_move_component:
     previous_node_up_move_component.can_move = true
-  var node_up_move_component := _get_move_component(node_up) if is_instance_valid(node_up) else null
+  var node_up_move_component := MoveComponent.get_component(node_up)
   if node_up_move_component:
     node_up_move_component.can_move = false
 

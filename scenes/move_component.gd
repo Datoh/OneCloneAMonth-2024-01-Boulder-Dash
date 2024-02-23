@@ -14,6 +14,15 @@ var _move_timestamp = 0.0
 signal move_to(direction: Vector2)
 signal moved(node: Node2D)
 
+static func get_component(entity: Variant) -> MoveComponent:
+  if not is_instance_valid(entity) or not entity is Node:
+    return null
+  for child in entity.get_children():
+    if child is MoveComponent:
+      return child as MoveComponent
+  return null
+
+
 func _ready():
   _move_from = node.position
   _move_to = node.position
