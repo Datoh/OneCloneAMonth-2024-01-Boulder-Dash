@@ -84,5 +84,7 @@ node = NodePath("..")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vdhit")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [connection signal="move_to" from="MoveComponent" to="." method="_on_move_component_move_to"]
 [connection signal="moved" from="MoveComponent" to="." method="_on_move_component_moved"]

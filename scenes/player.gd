@@ -6,6 +6,7 @@ class_name Player
 @onready var ray_cast_2d = $RayCast2D
 @onready var ray_cast_2d_all = $RayCast2DAll
 @onready var sprite_2d = $Sprite2D
+@onready var camera: Camera2D = $Camera2D
 
 signal move(node: Node2D, node_up: Node2D)
 signal moved(node: Node2D)

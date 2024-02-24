@@ -26,6 +26,15 @@ func _ready():
   for monster in get_tree().get_nodes_in_group("monster"):
     monster.player = _player
     monster.area_entered.connect(_on_monster_area_entered)
+  _set_camera_limits()
+
+
+func _set_camera_limits():
+    var map_limits = %TileMap.get_used_rect()
+    _player.camera.limit_left = map_limits.position.x * TILE_SIZE
+    _player.camera.limit_right = map_limits.end.x * TILE_SIZE
+    _player.camera.limit_top = map_limits.position.y * TILE_SIZE
+    _player.camera.limit_bottom = map_limits.end.y * TILE_SIZE
 
 
 func _on_monster_area_entered(area: Area2D):
