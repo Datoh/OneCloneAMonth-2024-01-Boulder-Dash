@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://scenes/move_component.gd" id="1_2xmoj"]
 
-[node name="MoveComponent" type="Node2D"]
+[node name="MoveComponent" type="Node2D" groups=["move_component"]]
 script = ExtResource("1_2xmoj")

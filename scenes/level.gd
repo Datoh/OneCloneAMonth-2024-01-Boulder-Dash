@@ -3,13 +3,20 @@ class_name Level
 
 const TILE_SIZE = 32
 
-var _gem_collected = 0
+static var _current_level: int = 1
+static var _max_level: int = 2
+static var _gem_collected: int = 0
+
 var _node_up: Node2D = null
 var _player: Player = null
+var _win = false
+var _level_over = false
 
 var _explosion_scene = preload("res://scenes/explosion.tscn")
 
 func _ready():
+  %Gui.set_level(_current_level)
+  %Gui.set_gems(_gem_collected)
   await get_tree().process_frame
   var players = get_tree().get_nodes_in_group("player")
   assert(players.size() == 1 and players[0] is Player)
@@ -25,6 +32,19 @@ func _ready():
     monster.player = _player
     monster.area_entered.connect(_on_monster_area_entered)
   _set_camera_limits()
+
+
+func _physics_process(_delta):
+  if _level_over and _win and Input.is_action_just_pressed("ui_accept"):
+    _load_next_level()
+  elif Input.is_action_just_pressed("ui_accept"):
+    get_tree().reload_current_scene()
+
+
+func _load_next_level():
+  _gem_collected = _gem_collected if _current_level < _max_level else 0
+  _current_level =  _current_level + 1 if _current_level < _max_level else 1
+  get_tree().change_scene_to_file("res://scenes/levels/level_" + str(_current_level) + ".tscn")
 
 
 func _set_camera_limits():
@@ -45,7 +65,7 @@ func _on_player_area_entered(area: Area2D):
   if area.is_in_group("gem"):
     area.queue_free()
     _gem_collected += 1
-    %Gems.text = str(_gem_collected)
+    %Gui.set_gems(_gem_collected)
   elif area.is_in_group("boulder"):
     area.queue_free()
     _explosion(area.position)
@@ -55,7 +75,7 @@ func _on_player_area_entered(area: Area2D):
   elif area.is_in_group("dirt"):
     area.queue_free()
   elif area.is_in_group("exit"):
-    get_tree().call_deferred("reload_current_scene")
+    _end_level()
 
 
 func _explosion(a_position: Vector2):
@@ -87,8 +107,23 @@ func _on_moved(_node: Node2D):
 func _on_explosion_done():
   var player_alive = is_instance_valid(_player)
   if not player_alive:
-    get_tree().reload_current_scene()
+    _end_level()
   if player_alive:
     for fall_component in get_tree().get_nodes_in_group("can_fall"):
       (fall_component as FallComponent).update()
+
+
+func _end_level():
+  _level_over = true
+  _win = is_instance_valid(_player)
+  if _win and _current_level < _max_level:
+    %Gui.show_won()
+  elif _win and _current_level == _max_level:
+    %Gui.show_finished()
+  else:
+    %Gui.show_die()
+
+  for move_component in get_tree().get_nodes_in_group("move_component"):
+    (move_component as MoveComponent).can_move = false
+
 
