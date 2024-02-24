@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://b28lir17uci5m"]
+
+[ext_resource type="Script" path="res://scenes/auto_move_component.gd" id="1_6g5oo"]
+
+[node name="AutoMoveComponent" type="Node2D" node_paths=PackedStringArray("move_component")]
+script = ExtResource("1_6g5oo")
+move_component = NodePath("")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = false
+collision_mask = 94
+collide_with_areas = true

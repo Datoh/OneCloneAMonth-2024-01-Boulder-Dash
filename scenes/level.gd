@@ -23,6 +23,15 @@ func _ready():
     (move_component as MoveComponent).moved.connect(_on_moved)
   for fall_component in get_tree().get_nodes_in_group("can_fall"):
     (fall_component as FallComponent).update()
+  for monster in get_tree().get_nodes_in_group("monster"):
+    monster.player = _player
+    monster.area_entered.connect(_on_monster_area_entered)
+
+
+func _on_monster_area_entered(area: Area2D):
+  if area.is_in_group("boulder"):
+    area.queue_free()
+    _explosion(area.position)
 
 
 func _on_player_area_entered(area: Area2D):
@@ -30,6 +39,9 @@ func _on_player_area_entered(area: Area2D):
     area.queue_free()
     _gem_collected += 1
   elif area.is_in_group("boulder"):
+    area.queue_free()
+    _explosion(area.position)
+  elif area.is_in_group("monster"):
     area.queue_free()
     _explosion(area.position)
   elif area.is_in_group("dirt"):
@@ -65,5 +77,10 @@ func _on_moved(_node: Node2D):
 
 
 func _on_explosion_done():
-  if not is_instance_valid(_player):
+  var player_alive = is_instance_valid(_player)
+  if not player_alive:
     get_tree().reload_current_scene()
+  if player_alive:
+    for fall_component in get_tree().get_nodes_in_group("can_fall"):
+      (fall_component as FallComponent).update()
+

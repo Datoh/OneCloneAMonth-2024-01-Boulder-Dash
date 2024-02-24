@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://del3u8un7whlj"]
+
+[ext_resource type="Texture2D" uid="uid://y8hql3o7hnmh" path="res://assets/images/sprites.png" id="1_klwp5"]
+[ext_resource type="PackedScene" uid="uid://dnohq8rg66xce" path="res://scenes/move_component.tscn" id="1_m00uf"]
+[ext_resource type="Script" path="res://scenes/monster.gd" id="1_nbwcn"]
+[ext_resource type="PackedScene" uid="uid://b28lir17uci5m" path="res://scenes/auto_move_component.tscn" id="4_111px"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a554k"]
+size = Vector2(10, 10)
+
+[sub_resource type="Animation" id="Animation_nhw88"]
+resource_name = "walk"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.1, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [30, 31, 32]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f1xvi"]
+_data = {
+"walk": SubResource("Animation_nhw88")
+}
+
+[node name="Monster" type="Area2D" groups=["monster"]]
+collision_layer = 32
+collision_mask = 9
+script = ExtResource("1_nbwcn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_klwp5")
+hframes = 10
+vframes = 10
+frame = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_a554k")
+
+[node name="MoveComponent" parent="." node_paths=PackedStringArray("node") instance=ExtResource("1_m00uf")]
+node = NodePath("..")
+
+[node name="AutoMoveComponent" parent="." node_paths=PackedStringArray("move_component") instance=ExtResource("4_111px")]
+move_component = NodePath("../MoveComponent")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f1xvi")
+}
+autoplay = "walk"
+
+[connection signal="move_to" from="MoveComponent" to="." method="_on_move_component_move_to"]
