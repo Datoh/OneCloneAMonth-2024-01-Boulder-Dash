@@ -20,7 +20,7 @@ frame = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_007mi")
 
-[node name="MoveComponent" parent="." node_paths=PackedStringArray("node") instance=ExtResource("2_igwd5")]
+[node name="MoveComponent" parent="." node_paths=PackedStringArray("node") groups=["can_move"] instance=ExtResource("2_igwd5")]
 node = NodePath("..")
 
 [node name="FallComponent" parent="." node_paths=PackedStringArray("_move_component") instance=ExtResource("3_j84cg")]

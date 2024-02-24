@@ -30,10 +30,6 @@ func update():
     _move_component.move(DIRECTION_RIGHT)
   elif _can_fall_to_side(DIRECTION_LEFT):
     _move_component.move(DIRECTION_LEFT)
-  else:
-    ray_cast_2d_dirt_gem.target_position = DIRECTION_DOWN
-    ray_cast_2d_dirt_gem.force_raycast_update()
-    _move_component.can_move = not ray_cast_2d_dirt_gem.is_colliding()
 
 
 func _can_fall_to(offset: Vector2) -> bool:

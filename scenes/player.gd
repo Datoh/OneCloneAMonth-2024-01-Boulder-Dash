@@ -11,7 +11,6 @@ signal move(node: Node2D, node_up: Node2D)
 signal moved(node: Node2D)
 
 func _ready():
-  move_component.can_move = true
   Input.set_use_accumulated_input(false)
 
 
