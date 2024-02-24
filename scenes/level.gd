@@ -9,8 +9,6 @@ var _player: Player = null
 
 var _explosion_scene = preload("res://scenes/explosion.tscn")
 
-@onready var _explosions = $Explosions
-
 func _ready():
   await get_tree().process_frame
   var players = get_tree().get_nodes_in_group("player")
@@ -47,6 +45,7 @@ func _on_player_area_entered(area: Area2D):
   if area.is_in_group("gem"):
     area.queue_free()
     _gem_collected += 1
+    %Gems.text = str(_gem_collected)
   elif area.is_in_group("boulder"):
     area.queue_free()
     _explosion(area.position)
@@ -64,7 +63,7 @@ func _explosion(a_position: Vector2):
   var explosion = _explosion_scene.instantiate()
   explosion.position = snapped_position
   explosion.explosion_done.connect(_on_explosion_done)
-  _explosions.call_deferred("add_child", explosion)
+  %Explosions.call_deferred("add_child", explosion)
 
 
 func _on_player_move(_node: Node2D, node_up: Node2D):
