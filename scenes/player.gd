@@ -50,6 +50,7 @@ func _can_move_to(offset: Vector2) -> bool:
 func _on_move_component_move_to(direction: Vector2):
   if animation_player.current_animation != "walk":
     animation_player.play("walk")
+  %AudioStreamPlayerWalk.play()
   sprite_2d.scale.x = -1.0 if direction.x < 0.0 else 1.0 # flip_h animation
 
 

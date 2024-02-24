@@ -1,5 +1,17 @@
 extends CanvasLayer
 
+func play_explosion():
+  %AudioStreamPlayerExplosion.play()
+
+
+func play_gem_collected():
+  %AudioStreamPlayerGem.play()
+
+
+func play_exit():
+  %AudioStreamPlayerExit.play()
+
+
 func set_gems(gems: int):
   %Gems.text = str(gems)
 

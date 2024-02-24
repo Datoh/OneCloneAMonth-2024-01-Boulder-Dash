@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://del3u8un7whlj"]
+[gd_scene load_steps=9 format=3 uid="uid://del3u8un7whlj"]
 
 [ext_resource type="Texture2D" uid="uid://y8hql3o7hnmh" path="res://assets/images/sprites.png" id="1_klwp5"]
 [ext_resource type="PackedScene" uid="uid://dnohq8rg66xce" path="res://scenes/move_component.tscn" id="1_m00uf"]
 [ext_resource type="Script" path="res://scenes/monster.gd" id="1_nbwcn"]
 [ext_resource type="PackedScene" uid="uid://b28lir17uci5m" path="res://scenes/auto_move_component.tscn" id="4_111px"]
+[ext_resource type="AudioStream" uid="uid://cvgmq3m5vq3xr" path="res://assets/sounds/slime_000.ogg" id="5_d3f26"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a554k"]
 size = Vector2(10, 10)
@@ -55,5 +56,9 @@ libraries = {
 "": SubResource("AnimationLibrary_f1xvi")
 }
 autoplay = "walk"
+
+[node name="AudioStreamPlayerWalk" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_d3f26")
 
 [connection signal="move_to" from="MoveComponent" to="." method="_on_move_component_move_to"]

@@ -11,3 +11,4 @@ extends Area2D
 
 func _on_move_component_move_to(direction):
   sprite_2d.scale.x = -1.0 if direction.x < 0.0 else 1.0 # flip_h animation
+  %AudioStreamPlayerWalk.play()

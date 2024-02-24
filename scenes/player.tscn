@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ft60qmfbpydq"]
+[gd_scene load_steps=9 format=3 uid="uid://ft60qmfbpydq"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_82ok7"]
 [ext_resource type="Texture2D" uid="uid://y8hql3o7hnmh" path="res://assets/images/sprites.png" id="1_rik0e"]
 [ext_resource type="PackedScene" uid="uid://dnohq8rg66xce" path="res://scenes/move_component.tscn" id="2_kbsx2"]
+[ext_resource type="AudioStream" uid="uid://gxd8bba0lmpf" path="res://assets/sounds/footstep00.ogg" id="4_j6vqs"]
 
 [sub_resource type="Animation" id="Animation_bix5c"]
 resource_name = "idle"
@@ -85,6 +86,10 @@ node = NodePath("..")
 shape = SubResource("RectangleShape2D_vdhit")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AudioStreamPlayerWalk" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_j6vqs")
 
 [connection signal="move_to" from="MoveComponent" to="." method="_on_move_component_move_to"]
 [connection signal="moved" from="MoveComponent" to="." method="_on_move_component_moved"]

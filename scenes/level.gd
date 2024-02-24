@@ -66,6 +66,7 @@ func _on_player_area_entered(area: Area2D):
     area.queue_free()
     _gem_collected += 1
     %Gui.set_gems(_gem_collected)
+    %Gui.play_gem_collected()
   elif area.is_in_group("boulder"):
     area.queue_free()
     _explosion(area.position)
@@ -75,6 +76,7 @@ func _on_player_area_entered(area: Area2D):
   elif area.is_in_group("dirt"):
     area.queue_free()
   elif area.is_in_group("exit"):
+    %Gui.play_exit()
     _end_level()
 
 
@@ -84,6 +86,7 @@ func _explosion(a_position: Vector2):
   explosion.position = snapped_position
   explosion.explosion_done.connect(_on_explosion_done)
   %Explosions.call_deferred("add_child", explosion)
+  %Gui.play_explosion()
 
 
 func _on_player_move(_node: Node2D, node_up: Node2D):

@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://1j835kpsc63t"]
+[gd_scene load_steps=5 format=3 uid="uid://1j835kpsc63t"]
 
 [ext_resource type="Script" path="res://scenes/gui.gd" id="1_55ulw"]
+[ext_resource type="AudioStream" uid="uid://cmdd22pxvoyyl" path="res://assets/sounds/explosionCrunch_001.ogg" id="2_s36xh"]
+[ext_resource type="AudioStream" uid="uid://doqdx3pjcf2rx" path="res://assets/sounds/powerUp2.ogg" id="3_hysx3"]
+[ext_resource type="AudioStream" uid="uid://bdg0f0russde6" path="res://assets/sounds/doorOpen_1.ogg" id="4_6cdr0"]
 
 [node name="Gui" type="CanvasLayer"]
 script = ExtResource("1_55ulw")
@@ -104,3 +107,15 @@ theme_override_font_sizes/font_size = 32
 text = "YOU FINISHED THE GAME
 CONGRATULATION"
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayerExplosion" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_s36xh")
+
+[node name="AudioStreamPlayerGem" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_hysx3")
+
+[node name="AudioStreamPlayerExit" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_6cdr0")

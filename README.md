@@ -15,6 +15,9 @@ A clone of [Boulder Dash](https://en.wikipedia.org/wiki/Boulder_Dash_(video_game
 
 ## Credits:
 * [Snowy Owl - CORMORANT14 PALETTE color palette](https://lospec.com/palette-list/cormorant14)
+* [Sci-fi Sounds - Kenney](https://kenney.nl/assets/sci-fi-sounds)
+* [RPG Audio - Kenney](https://kenney.nl/assets/rpg-audio)
+* [Digital Audio - Kenney](https://kenney.nl/assets/digital-audio)
 
 ## Tools
 * [Godot 4.2.x](https://godotengine.org/)
