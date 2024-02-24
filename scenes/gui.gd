@@ -12,8 +12,9 @@ func play_exit():
   %AudioStreamPlayerExit.play()
 
 
-func set_gems(gems: int):
-  %Gems.text = str(gems)
+func set_gems(gems: int, total_gems: int, gems_to_collect: int):
+  %Gems.text = str(gems) + " / " + str(gems_to_collect)
+  %TotalGems.text = str(total_gems)
 
 
 func set_level(level: int):

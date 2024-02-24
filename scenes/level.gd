@@ -5,7 +5,11 @@ const TILE_SIZE = 32
 
 static var _current_level: int = 1
 static var _max_level: int = 2
-static var _gem_collected: int = 0
+static var _total_gems_collected: int = 0
+
+var _gems_collected: int = 0
+
+@export var gems_to_collect: int = 0
 
 var _node_up: Node2D = null
 var _player: Player = null
@@ -16,7 +20,7 @@ var _explosion_scene = preload("res://scenes/explosion.tscn")
 
 func _ready():
   %Gui.set_level(_current_level)
-  %Gui.set_gems(_gem_collected)
+  %Gui.set_gems(_gems_collected, _total_gems_collected, gems_to_collect)
   await get_tree().process_frame
   var players = get_tree().get_nodes_in_group("player")
   assert(players.size() == 1 and players[0] is Player)
@@ -32,6 +36,7 @@ func _ready():
     monster.player = _player
     monster.area_entered.connect(_on_monster_area_entered)
   _set_camera_limits()
+  _open_exit()
 
 
 func _physics_process(_delta):
@@ -42,7 +47,7 @@ func _physics_process(_delta):
 
 
 func _load_next_level():
-  _gem_collected = _gem_collected if _current_level < _max_level else 0
+  _total_gems_collected = _total_gems_collected if _current_level < _max_level else 0
   _current_level =  _current_level + 1 if _current_level < _max_level else 1
   get_tree().change_scene_to_file("res://scenes/levels/level_" + str(_current_level) + ".tscn")
 
@@ -64,9 +69,11 @@ func _on_monster_area_entered(area: Area2D):
 func _on_player_area_entered(area: Area2D):
   if area.is_in_group("gem"):
     area.queue_free()
-    _gem_collected += 1
-    %Gui.set_gems(_gem_collected)
+    _gems_collected += 1
+    _total_gems_collected += 1
+    %Gui.set_gems(_gems_collected, _total_gems_collected, gems_to_collect)
     %Gui.play_gem_collected()
+    _open_exit()
   elif area.is_in_group("boulder"):
     area.queue_free()
     _explosion(area.position)
@@ -78,6 +85,12 @@ func _on_player_area_entered(area: Area2D):
   elif area.is_in_group("exit"):
     %Gui.play_exit()
     _end_level()
+
+
+func _open_exit():
+  if _gems_collected >= gems_to_collect:
+    for exit in get_tree().get_nodes_in_group("exit"):
+      exit.open()
 
 
 func _explosion(a_position: Vector2):
