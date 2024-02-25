@@ -7,6 +7,7 @@ const DIRECTION_RIGHT = Vector2.RIGHT * Level.TILE_SIZE
 
 @export var _move_component: MoveComponent = null
 
+@onready var ray_cast_2d = $RayCast2D
 @onready var ray_cast_2d_dirt_gem = $RayCast2DDirtGem
 @onready var ray_cast_2d_no_player = $RayCast2DNoPlayer
 @onready var ray_cast_2d_no_player_no_dirt = $RayCast2DNoPlayerNoDirt
@@ -43,9 +44,9 @@ func _can_fall_to_side(offset: Vector2) -> bool:
   ray_cast_2d_no_player_no_dirt.force_raycast_update()
   if not ray_cast_2d_no_player_no_dirt.is_colliding():
     return false
-  ray_cast_2d_no_player.target_position = offset
-  ray_cast_2d_no_player.force_raycast_update()
-  if ray_cast_2d_no_player.is_colliding():
+  ray_cast_2d.target_position = offset
+  ray_cast_2d.force_raycast_update()
+  if ray_cast_2d.is_colliding():
     return false
   ray_cast_2d_no_player.position = offset
   ray_cast_2d_no_player.target_position = DIRECTION_DOWN

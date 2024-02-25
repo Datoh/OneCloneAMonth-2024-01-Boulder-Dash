@@ -30,11 +30,10 @@ func _ready():
   _player.moved.connect(_on_player_moved)
   for move_component in get_tree().get_nodes_in_group("can_move"):
     (move_component as MoveComponent).moved.connect(_on_moved)
-  for fall_component in get_tree().get_nodes_in_group("can_fall"):
-    (fall_component as FallComponent).update()
   for monster in get_tree().get_nodes_in_group("monster"):
     monster.player = _player
     monster.area_entered.connect(_on_monster_area_entered)
+  _update_fall()
   _set_camera_limits()
   _open_exit()
 
@@ -116,6 +115,11 @@ func _on_player_moved(_node: Node2D, node_up: Node2D):
 
 
 func _on_moved(_node: Node2D):
+  _update_fall()
+
+
+func _update_fall():
+  await get_tree().physics_frame
   for fall_component in get_tree().get_nodes_in_group("can_fall"):
     (fall_component as FallComponent).update()
 
@@ -125,8 +129,7 @@ func _on_explosion_done():
   if not player_alive:
     _end_level()
   if player_alive:
-    for fall_component in get_tree().get_nodes_in_group("can_fall"):
-      (fall_component as FallComponent).update()
+    _update_fall()
 
 
 func _end_level():
