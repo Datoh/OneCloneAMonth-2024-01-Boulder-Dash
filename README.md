@@ -7,11 +7,7 @@ A clone of [Boulder Dash](https://en.wikipedia.org/wiki/Boulder_Dash_(video_game
  * Title screen
 
 ### Code
- * Boulders/gems falls
- * Die
- * Exit
- * Score
- * Camera
+ * Add levels
 
 ## Credits:
 * [Snowy Owl - CORMORANT14 PALETTE color palette](https://lospec.com/palette-list/cormorant14)
